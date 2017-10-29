@@ -67,6 +67,7 @@ public class ContactInfoParser {
         }
         mCursor.close();
         return infos;
+        //mCursor.close();
     }
 
 }
