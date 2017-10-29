@@ -1,4 +1,4 @@
-package cn.edu.gdmec.android.zhucongrui;
+package cn.edu.gdmec.android.zcr;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("cd.edu.gdmec.android.zcr", appContext.getPackageName());
+        assertEquals("", appContext.getPackageName());
     }
 }
