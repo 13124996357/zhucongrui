@@ -10,18 +10,6 @@ import android.os.Environment;
 
 import java.io.File;
 
-/*public class MyUtils {
-    public static String getVersion(Context context){
-        PackageManager packageManager = context.getPackageManager();
-        try{
-            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(),0);
-            return packageInfo.versionName;
-        }catch (PackageManager.NameNotFoundException e){
-            e.printStackTrace();
-            return "";
-        }
-    }
-}*/
 public class MyUtils {
     /**
      * 获取版本号
