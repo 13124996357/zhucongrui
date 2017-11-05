@@ -93,30 +93,6 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-
-   /* public void startActivity(Class<?> cls){
-        Intent intent=new Intent(HomeActivity.this,cls);
-       startActivity(intent);
-    }
-
-
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode==KeyEvent.KEYCODE_BACK){
-            if((System.currentTimeMillis()-mExitTime)>2000){
-                System.exit(0);
-                //Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-                //mExitTime=System.currentTimeMillis();
-            }else {
-                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-                mExitTime=System.currentTimeMillis();
-               // System.exit(0);
-            }
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }*/
     private void showSetUpPswdDialog(){
         final SetUpPasswordDialog setUpPasswordDialog=new SetUpPasswordDialog(HomeActivity.this);
         setUpPasswordDialog.setMyCallBack(new SetUpPasswordDialog.MyCallBack(){

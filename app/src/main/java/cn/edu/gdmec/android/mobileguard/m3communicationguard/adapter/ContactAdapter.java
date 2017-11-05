@@ -1,4 +1,5 @@
-package cn.edu.gdmec.android.mobileguard.m2theftguard.adapter;
+package cn.edu.gdmec.android.mobileguard.m3communicationguard.adapter;
+
 
 import android.content.Context;
 import android.view.View;
@@ -11,26 +12,20 @@ import java.util.List;
 import cn.edu.gdmec.android.mobileguard.R;
 import cn.edu.gdmec.android.mobileguard.m2theftguard.entity.ContactInfo;
 
-
 public class ContactAdapter extends BaseAdapter {
     private List<ContactInfo> contactInfos;
     private Context context;
-    public ContactAdapter(List<ContactInfo> contactInfos, Context context) {
+
+    public ContactAdapter(List<ContactInfo> systemContacts, Context context){
         super();
-        this.contactInfos=contactInfos;
+        this.contactInfos=systemContacts;
         this.context=context;
     }
-
-   // public ContactAdapter(List<ContactInfo> systemContacts, ContactSelectActivity context) {
-
-   // }
-
     @Override
     public int getCount() {
         return contactInfos.size();
     }
 
-    @Override
     public Object getItem(int position) {
         return contactInfos.get(position);
     }
@@ -39,27 +34,31 @@ public class ContactAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
-//parent    改为viewGroup
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder=null;
         if (convertView==null){
-            convertView = View.inflate(context, R.layout.item_list_contact_select,null);
-            holder = new ViewHolder();
+            convertView=View.inflate(context, R.layout.item_list_contact_select,null);
+            holder=new ViewHolder();
             holder.mNameTV=(TextView)convertView.findViewById(R.id.tv_name);
-            holder.mPhoneTv=(TextView)convertView.findViewById(R.id.tv_phone);
+            holder.mPhoneTV=(TextView)convertView.findViewById(R.id.tv_phone);
+            holder.mContactImgv=convertView.findViewById(R.id.view1);
             convertView.setTag(holder);
-        }else{
+        }else {
             holder=(ViewHolder)convertView.getTag();
         }
         holder.mNameTV.setText(contactInfos.get(position).name);
-        holder.mPhoneTv.setText(contactInfos.get(position).phone);
+        holder.mPhoneTV.setText(contactInfos.get(position).phone);
+        holder.mNameTV.setTextColor(context.getResources().getColor(R.color.bright_purple));
+        holder.mPhoneTV.setTextColor(context.getResources().getColor(R.color.bright_purple));
+        holder.mContactImgv.setBackgroundResource(R.drawable.brightpurple_contact_icon);
         return convertView;
     }
     static class ViewHolder{
         TextView mNameTV;
-        TextView mPhoneTv;
-
-
+        TextView mPhoneTV;
+        View mContactImgv;
     }
+
 }

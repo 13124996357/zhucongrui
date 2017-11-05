@@ -1,6 +1,7 @@
 package cn.edu.gdmec.android.mobileguard.m3communicationguard;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import org.apache.http.util.TextUtils;
 
 import cn.edu.gdmec.android.mobileguard.R;
+import cn.edu.gdmec.android.mobileguard.m2theftguard.ContactSelectActivity;
 import cn.edu.gdmec.android.mobileguard.m3communicationguard.db.dao.BlackNumberDao;
 import cn.edu.gdmec.android.mobileguard.m3communicationguard.entity.BlackContactInfo;
 
@@ -65,11 +67,38 @@ public class AddBlackNumberActivity extends AppCompatActivity implements View.On
                     blackContactInfo.phoneNumber=number;
                     blackContactInfo.contactName=name;
                     if (mSmsCB.isChecked()& mTelCB.isChecked()){
+                        blackContactInfo.mode=3;
 
+                    }else if(mSmsCB.isChecked()&mTelCB.isChecked()){
+                        blackContactInfo.mode=2;
+                    }else if(!mSmsCB.isChecked()&mTelCB.isChecked()){
+                        blackContactInfo.mode=1;
+                    }else{
+                        Toast.makeText(this,"请选择拦截模式！",Toast.LENGTH_LONG).show();
+                        return;
                     }
+                    if(!dao.IsNumberExist(blackContactInfo.phoneNumber)){
+                        dao.add(blackContactInfo);
+                    }else{
+                        Toast.makeText(this,"该号码已经被添加到黑名单！",Toast.LENGTH_LONG).show();
+                    }
+                    finish();
                 }
+                break;
+            case R.id.add_fromcontact_btn:
+                startActivityForResult(new Intent(this, ContactSelectActivity.class),0);
+                break;
         }
 
     }
-    //2525
+    @Override
+    protected void onActivityResult(int requestCode,int resultCode,Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if(data!=null){
+            String phone=data.getStringExtra("phone");
+            String name=data.getStringExtra("name");
+            mNameET.setText(name);
+            mNameET.setText(phone);
+        }
+    }
 }

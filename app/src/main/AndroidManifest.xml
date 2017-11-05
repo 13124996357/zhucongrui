@@ -24,6 +24,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name="cn.edu.gdmec.android.mobileguard.m1Home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -74,7 +75,13 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED"/>
             </intent-filter>
         </receiver>
-        <!-- 黑名单电话-->>
+        <!--拦截黑名单信息-->
+        <receiver android:name=".m3communicationguard.receiver.InterceptSmsReciever">
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
+        <!--拦截黑名单电话-->>
         <receiver android:name="cn.edu.gdmec.android.mobileguard.m3communicationguard.receiver.InterceptCallReciever">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.intent.action.PHONE_STATE"/>
