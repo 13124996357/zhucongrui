@@ -22,6 +22,7 @@ import cn.edu.gdmec.android.mobileguard.m2theftguard.dialog.SetUpPasswordDialog;
 import cn.edu.gdmec.android.mobileguard.m2theftguard.receiver.MyDeviceAdminReciever;
 import cn.edu.gdmec.android.mobileguard.m2theftguard.utils.MD5Utils;
 import cn.edu.gdmec.android.mobileguard.m3communicationguard.SecurityPhoneActivity;
+import cn.edu.gdmec.android.mobileguard.m4appmanager.AppManagerActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -60,6 +61,9 @@ public class HomeActivity extends AppCompatActivity {
                         Intent intent = new Intent(HomeActivity.this, SecurityPhoneActivity.class);
                         startActivity(intent);
                         break;
+                    case 2:
+                        startActivity(AppManagerActivity.class);
+                        break;
                 }
             }
         });
@@ -90,7 +94,7 @@ public class HomeActivity extends AppCompatActivity {
             if((System.currentTimeMillis()-mExitTime)<2000){
                 System.exit(0);
             }else{
-                Toast.makeText(this,"再按一次退出程序", Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"再按一次退出程序",Toast.LENGTH_LONG).show();
                 mExitTime = System.currentTimeMillis();
             }
             return true;
