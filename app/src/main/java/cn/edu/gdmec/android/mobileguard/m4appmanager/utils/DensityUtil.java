@@ -14,9 +14,7 @@ public class DensityUtil {
         return (int) dpValue;
     }
 
-    /**
-     * 像素px转换为dip
-     */
+
     public static int px2dip(Context context, float pxValue) {
         try {
             final float scale = context.getResources().getDisplayMetrics().density;
