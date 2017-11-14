@@ -32,6 +32,7 @@
         android:paddingLeft="5dp"
         android:textColor="@color/bright_purple"
         android:textSize="16sp"/>
+
     <EditText
         android:id="@+id/et_blackstate"
         android:layout_width="match_parent"
