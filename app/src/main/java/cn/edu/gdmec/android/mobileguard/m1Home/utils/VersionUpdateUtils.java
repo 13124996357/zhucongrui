@@ -1,12 +1,19 @@
 package cn.edu.gdmec.android.mobileguard.m1Home.utils;
 
+
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
+import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -20,10 +27,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import cn.edu.gdmec.android.mobileguard.R;
-import cn.edu.gdmec.android.mobileguard.m1Home.HomeActivity;
 import cn.edu.gdmec.android.mobileguard.m1Home.entity.VersionEntity;
+import static android.content.Context.DOWNLOAD_SERVICE;
+
+/**
+ * 更新提醒工具类
+ * Created by apple on 2017/9/11.
+ */
+
 public class VersionUpdateUtils {
     //声明常量
     private static final int MESSAGE_IO_ERROR = 102;
@@ -36,10 +51,21 @@ public class VersionUpdateUtils {
     private ProgressDialog mProgressDialog;
     private VersionEntity versionEntity;
 
+    //下一个activtiy的class
+    private Class<?> nextActivty;
+    //下载完成后的回调
+    private DownloadCallback downloadCallback;
+    //下载任务的id
+    private long downloadId;
+    //下载完毕的广播接收者
+    private BroadcastReceiver broadcastReceiver;
+
     //构造方法
-    public VersionUpdateUtils(String mVersion, Activity context) {
+    public VersionUpdateUtils(String mVersion, Activity context,DownloadCallback downloadCallback,Class<?> nextActivty) {
         this.mVersion = mVersion;
         this.context = context;
+        this.downloadCallback = downloadCallback;
+        this.nextActivty = nextActivty;
     }
 
     //发送进入主界面消息
@@ -52,7 +78,7 @@ public class VersionUpdateUtils {
         public void handleMessage(Message msg) {
             switch(msg.what){
                 case MESSAGE_IO_ERROR:
-                    Toast.makeText(context,"IO异常",Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,"IO异常", Toast.LENGTH_LONG).show();
                     enterHome();
                     break;
                 case MESSAGE_JSON_ERROR:
@@ -63,9 +89,11 @@ public class VersionUpdateUtils {
                     showUpdataDialog(versionEntity);
                     break;
                 case MESSAGE_ENTERHOME:
-                    Intent intent = new Intent(context,HomeActivity.class);
-                    context.startActivity(intent);
-                    context.finish();
+                    if(nextActivty!=null) {
+                        Intent intent = new Intent(context, nextActivty);
+                        context.startActivity(intent);
+                        context.finish();
+                    }
                     break;
             }
         }
@@ -74,7 +102,7 @@ public class VersionUpdateUtils {
 
     /**
      * 获取服务器版本号*/
-    public void getCloudVersion(){
+    public void getCloudVersion(String url){
 
         try {
             HttpClient client = new DefaultHttpClient();
@@ -82,14 +110,14 @@ public class VersionUpdateUtils {
             HttpConnectionParams.setConnectionTimeout(client.getParams(), 5000);
         /*请求超时*/
             HttpConnectionParams.setSoTimeout(client.getParams(), 5000);
-            HttpGet httpGet = new HttpGet(
-                    "http://android2017.duapp.com/updateinfo.html");
+            HttpGet httpGet = new HttpGet(url);
             HttpResponse execute = client.execute(httpGet);
             if (execute.getStatusLine().getStatusCode() == 200) {
                 // 请求和响应都成功了
                 HttpEntity entity = execute.getEntity();
                 String result = EntityUtils.toString(entity, "utf-8");
                 // 创建jsonObject对象
+                System.out.println(result);
                 JSONObject jsonObject = new JSONObject(result);
                 versionEntity = new VersionEntity();
                 String code = jsonObject.getString("code");
@@ -140,6 +168,62 @@ public class VersionUpdateUtils {
 
     protected void downloadNewApk(String apkurl){
         DownLoadUtils downLoadUtils = new DownLoadUtils();
-        downLoadUtils.downapk(apkurl, "mobilesafenew.apk", context);
+        String filename = "downloadfile";
+        String suffixes="avi|mpeg|3gp|mp3|mp4|wav|jpeg|gif|jpg|png|apk|exe|pdf|rar|zip|docx|doc|apk|db";
+        Pattern pat= Pattern.compile("[\\w]+[\\.]("+suffixes+")");//正则判断
+        Matcher mc=pat.matcher(apkurl);//条件匹配
+        while(mc.find()){
+            filename = mc.group();//截取文件名后缀名
+        }
+        downapk(apkurl, filename, context);
+    }
+
+    public void downapk(String url,String targetFile,Context context){
+
+        //创建下载任务
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        request.setAllowedOverRoaming(false);//漫游网络是否可以下载
+
+        //设置文件类型，可以在下载结束后自动打开该文件
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        String mimeString = mimeTypeMap.getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(url));
+        request.setMimeType(mimeString);
+
+        //在通知栏中显示，默认就是显示的
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+        request.setVisibleInDownloadsUi(true);
+
+        //sdcard的目录下的download文件夹，必须设置
+        request.setDestinationInExternalPublicDir("/download/", targetFile);
+        //request.setDestinationInExternalFilesDir(),也可以自己制定下载路径
+
+        //将下载请求加入下载队列
+        DownloadManager downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
+        //加入下载队列后会给该任务返回一个long型的id，
+        //通过该id可以取消任务，重启任务等等，看上面源码中框起来的方法
+        downloadId = downloadManager.enqueue(request);
+        listener(downloadId,targetFile);
+    }
+
+    private void listener(final long Id,final String filename) {
+
+        // 注册广播监听系统的下载完成事件。
+        IntentFilter intentFilter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                long ID = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+                if (ID == Id) {
+                    Toast.makeText(context.getApplicationContext(), "下载编号:" + Id +"的"+filename+" 下载完成!", Toast.LENGTH_LONG).show();
+                }
+                context.unregisterReceiver(broadcastReceiver);
+                downloadCallback.afterDownload(filename);
+            }
+        };
+
+        context.registerReceiver(broadcastReceiver, intentFilter);
+    }
+    public interface DownloadCallback{
+        void afterDownload(String filename);
     }
 }

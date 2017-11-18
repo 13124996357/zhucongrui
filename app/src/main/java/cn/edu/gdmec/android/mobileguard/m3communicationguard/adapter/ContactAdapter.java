@@ -1,18 +1,9 @@
 package cn.edu.gdmec.android.mobileguard.m3communicationguard.adapter;
 
 
-import android.content.Context;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
+public class ContactAdapter{
 
-import java.util.List;
-
-import cn.edu.gdmec.android.mobileguard.R;
-import cn.edu.gdmec.android.mobileguard.m2theftguard.entity.ContactInfo;
-
-public class ContactAdapter extends BaseAdapter{
+} /*extends BaseAdapter{
     private List<ContactInfo> contactInfos;
     private Context context;
     public ContactAdapter(List<ContactInfo> contactInfos, Context context){
@@ -66,4 +57,4 @@ public class ContactAdapter extends BaseAdapter{
         View mContactImgv;
 
     }
-}
+}*/

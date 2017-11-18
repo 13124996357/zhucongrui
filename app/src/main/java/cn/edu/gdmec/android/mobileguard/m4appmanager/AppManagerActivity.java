@@ -198,3 +198,4 @@ public class AppManagerActivity extends AppCompatActivity implements View.OnClic
         super.onDestroy();
     }
 }
+//55

@@ -53,10 +53,10 @@ public class SetUp4Activity extends BaseSetUpActivity{
         SharedPreferences.Editor editor=sp.edit();
         editor.putBoolean("isSetUp",true);
         editor.commit();
-        startActivityAndFinishShelf(LostFindActivity.class);
+       startActivityAndFinishSelf(LostFindActivity.class);
     }
     @Override
     public void showPre(){
-        startActivityAndFinishShelf(SetUp3Activity.class);
+        startActivityAndFinishSelf(SetUp3Activity.class);
     }
 }

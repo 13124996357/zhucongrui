@@ -42,12 +42,12 @@ public class SetUp3Activity extends BaseSetUpActivity implements View.OnClickLis
         SharedPreferences.Editor edit = sp.edit();
         edit.putString("safephone", safePhone);
         edit.commit();
-       startActivityAndFinishShelf(SetUp4Activity.class);
+       startActivityAndFinishSelf(SetUp4Activity.class);
     }
 
     @Override
     public void showPre() {
-      startActivityAndFinishShelf(SetUp2Activity.class);
+      startActivityAndFinishSelf(SetUp2Activity.class);
     }
 
     @Override

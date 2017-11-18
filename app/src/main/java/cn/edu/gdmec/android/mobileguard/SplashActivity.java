@@ -22,16 +22,23 @@ public class SplashActivity extends AppCompatActivity {
         mVersion = MyUtils.getVersion(getApplicationContext());
         mVersionTV = (TextView) findViewById(R.id.tv_splash_version);
         mVersionTV.setText("版本号:"+mVersion);
-        final VersionUpdateUtils versionUpdateUtils = new VersionUpdateUtils(mVersion,SplashActivity.this);
-//        new Thread(){
-//
-//            @Override
-//            public void run() {
-//                versionUpdateUtils.getCloudVersion();
-//            }
-//        }.start();
+        VersionUpdateUtils.DownloadCallback downloadCallback = new VersionUpdateUtils.DownloadCallback() {
+          @Override
+           public void afterDownload(String filename) {
+               MyUtils.installApk(SplashActivity.this,filename);
+            }
+        };
+       final VersionUpdateUtils versionUpdateUtils = new VersionUpdateUtils(mVersion,SplashActivity.this,downloadCallback,HomeActivity.class);
+        new Thread(){
+
+            @Override
+           public void run() {
+                versionUpdateUtils.getCloudVersion("http://android2017.duapp.com/updateinfo.html");
+            }
+        }.start();
         startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
 }
+
 

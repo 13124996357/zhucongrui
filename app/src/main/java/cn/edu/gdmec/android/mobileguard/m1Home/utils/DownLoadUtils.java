@@ -11,8 +11,7 @@ public class DownLoadUtils {
     public void downapk(String url,String targetFile,Context context){
         //创建下载任务
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-        request.setAllowedOverRoaming(false);
-        //漫游网络是否可以下载
+        request.setAllowedOverRoaming(false);//漫游网络是否可以下载
 
         //设置文件类型，可以在下载结束后自动打开该文件
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
@@ -34,3 +33,4 @@ public class DownLoadUtils {
         long mTaskId = downloadManager.enqueue(request);
     }
 }
+

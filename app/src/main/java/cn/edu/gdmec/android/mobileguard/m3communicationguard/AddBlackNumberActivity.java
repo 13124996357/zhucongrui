@@ -26,7 +26,6 @@ public class AddBlackNumberActivity extends AppCompatActivity implements View.On
     private EditText mTypeET;
     private BlackNumberDao dao;
 
-
     private void initView() {
         findViewById(R.id.rl_titlebar).setBackgroundColor(
                 getResources().getColor(R.color.bright_purple));
@@ -39,7 +38,7 @@ public class AddBlackNumberActivity extends AppCompatActivity implements View.On
         mTelCB = (CheckBox) findViewById(R.id.cb_blacknumber_tel);
         mNumET = (EditText) findViewById(R.id.et_blacknumber);
         mNameET = (EditText) findViewById(R.id.et_blackname);
-        mTypeET = (EditText)findViewById(R.id.et_blackstate);
+        mTypeET = (EditText) findViewById(R.id.et_blackstype);
         findViewById(R.id.add_blacknum_btn).setOnClickListener(this);
         findViewById(R.id.add_fromcontact_btn).setOnClickListener(this);
     }
@@ -51,11 +50,9 @@ public class AddBlackNumberActivity extends AppCompatActivity implements View.On
             // 获取选中的联系人信息
             String phone = data.getStringExtra("phone");
             String name = data.getStringExtra("name");
-            String type = data.getStringExtra("type");
-
             mNameET.setText(name);
             mNumET.setText(phone);
-            mTypeET.setText(type);
+            mTypeET.setText("骚扰");
         }
     }
 
@@ -85,7 +82,7 @@ public class AddBlackNumberActivity extends AppCompatActivity implements View.On
                     BlackContactInfo blackContactInfo = new BlackContactInfo();
                     blackContactInfo.phoneNumber = number;
                     blackContactInfo.contactName = name;
-                    blackContactInfo.blackType = type;
+                    blackContactInfo.type =type;
                     if (mSmsCB.isChecked() & mTelCB.isChecked()) {
                         // 两种拦截模式都选
                         blackContactInfo.mode = 3;

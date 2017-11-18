@@ -1,21 +1,13 @@
 package cn.edu.gdmec.android.mobileguard.m5virusscan.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.security.MessageDigest;
-
 /**
  * Created by Administrator on 2017/11/10 0010.
  */
 
 public class MD5Utils {
-    /**
-     * 获取文件的md5值
-     * @param path 文件的路径
-     * @return null 文件不存在
-     */
-    public static String getFileMd5(String path){
-      try{
+
+    }
+      /*try{
           MessageDigest digest=MessageDigest.getInstance("md5");
           File file=new File(path);
           FileInputStream fis=new FileInputStream(file);
@@ -40,6 +32,6 @@ public class MD5Utils {
           e.printStackTrace();
           return null;
       }
-    }
+    }*/
 
-}
+
