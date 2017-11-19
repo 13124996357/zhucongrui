@@ -11,6 +11,7 @@ public class MD5Utils {
      * @param text
      * @return
      */
+
     public static String encode(String text){
         try {
             MessageDigest digest = MessageDigest.getInstance("md5");
