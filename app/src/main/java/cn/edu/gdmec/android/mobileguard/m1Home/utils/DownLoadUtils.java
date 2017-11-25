@@ -3,9 +3,12 @@ package cn.edu.gdmec.android.mobileguard.m1Home.utils;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Environment;
 import android.webkit.MimeTypeMap;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
+
+
 
 public class DownLoadUtils {
     public void downapk(String url,String targetFile,Context context){
@@ -23,7 +26,7 @@ public class DownLoadUtils {
         request.setVisibleInDownloadsUi(true);
 
         //sdcard的目录下的download文件夹，必须设置
-        request.setDestinationInExternalPublicDir("/download/", targetFile);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, targetFile);
         //request.setDestinationInExternalFilesDir(),也可以自己制定下载路径
 
         //将下载请求加入下载队列
@@ -33,4 +36,3 @@ public class DownLoadUtils {
         long mTaskId = downloadManager.enqueue(request);
     }
 }
-

@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
@@ -32,6 +33,7 @@ import java.util.regex.Pattern;
 
 import cn.edu.gdmec.android.mobileguard.R;
 import cn.edu.gdmec.android.mobileguard.m1Home.entity.VersionEntity;
+
 import static android.content.Context.DOWNLOAD_SERVICE;
 
 /**
@@ -78,7 +80,7 @@ public class VersionUpdateUtils {
         public void handleMessage(Message msg) {
             switch(msg.what){
                 case MESSAGE_IO_ERROR:
-                    Toast.makeText(context,"IO异常", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,"IO异常",Toast.LENGTH_LONG).show();
                     enterHome();
                     break;
                 case MESSAGE_JSON_ERROR:
@@ -151,7 +153,7 @@ public class VersionUpdateUtils {
             public void onClick(DialogInterface dialogInterface, int i) {
                 //下载apk
                 downloadNewApk(versionEntity.apkurl);
-                enterHome();
+                //enterHome();
             }
         });
         builder.setNegativeButton("暂不升级", new DialogInterface.OnClickListener() {
@@ -170,7 +172,7 @@ public class VersionUpdateUtils {
         DownLoadUtils downLoadUtils = new DownLoadUtils();
         String filename = "downloadfile";
         String suffixes="avi|mpeg|3gp|mp3|mp4|wav|jpeg|gif|jpg|png|apk|exe|pdf|rar|zip|docx|doc|apk|db";
-        Pattern pat= Pattern.compile("[\\w]+[\\.]("+suffixes+")");//正则判断
+        Pattern pat=Pattern.compile("[\\w]+[\\.]("+suffixes+")");//正则判断
         Matcher mc=pat.matcher(apkurl);//条件匹配
         while(mc.find()){
             filename = mc.group();//截取文件名后缀名
@@ -194,7 +196,7 @@ public class VersionUpdateUtils {
         request.setVisibleInDownloadsUi(true);
 
         //sdcard的目录下的download文件夹，必须设置
-        request.setDestinationInExternalPublicDir("/download/", targetFile);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, targetFile);
         //request.setDestinationInExternalFilesDir(),也可以自己制定下载路径
 
         //将下载请求加入下载队列
@@ -220,7 +222,6 @@ public class VersionUpdateUtils {
                 downloadCallback.afterDownload(filename);
             }
         };
-
         context.registerReceiver(broadcastReceiver, intentFilter);
     }
     public interface DownloadCallback{

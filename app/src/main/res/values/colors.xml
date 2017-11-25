@@ -20,14 +20,16 @@
     <color name="white">#ffffff</color>
     <color name="blue">#2684DC</color>
     <color name="light_blue">#1671CE</color>
+    <!--缓存清理模块用到的 2017.11.18-->
+    <color name="light_rose_red">#F73CA7</color>
+    <color name="rose_red">#E72993</color>
 
 
     <color name="bright_gary">#ECEAEB</color>
 
     <color name="deep_gray">#ff666666</color>
 
-    <color name="rose_red">#E72993</color>
-    <color name="light_rose_red">#EC9592</color>
+
     <color name="light_pink">#EC9592</color>
 
     <color name="bright_blue">#1671CD</color>

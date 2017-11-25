@@ -20,6 +20,8 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
+    <!--缓存清理部分-->
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
 
     <application
         android:name=".App"
@@ -36,7 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".m1Home.HomeActivity"/>
+       <activity android:name=".m1Home.HomeActivity"/>
         <activity android:name=".m2theftguard.LostFindActivity" />
         <activity android:name=".m2theftguard.SetUp1Activity" />
         <activity android:name=".m2theftguard.SetUp2Activity" />
@@ -86,8 +88,7 @@
 
         <activity android:name=".m3communicationguard.AddBlackNumberActivity" />
         <activity android:name=".m3communicationguard.SecurityPhoneActivity" />
-        <!-- 拦截黑名单电话 -->
-        >
+
         <receiver
             android:name=".m3communicationguard.receiver.InterceptCallReciever"
             android:enabled="true"
@@ -109,7 +110,9 @@
 
         <activity android:name=".m4appmanager.AppManagerActivity" />
         <activity android:name=".m5virusscan.VirusScanSpeedActivity"/>
-        <activity android:name=".m5virusscan.VirusScanActivity" >
+        <activity android:name=".m5virusscan.VirusScanActivity" />
+        <activity android:name=".m6cleancache.CacheClearListActivity"/>
+        <activity android:name=".m6cleancache.CleanCacheActivity">
        </activity>
     </application>
 
