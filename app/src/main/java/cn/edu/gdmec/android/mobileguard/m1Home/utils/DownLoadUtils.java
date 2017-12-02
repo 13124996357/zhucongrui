@@ -1,5 +1,6 @@
 package cn.edu.gdmec.android.mobileguard.m1Home.utils;
 
+
 import android.app.DownloadManager;
 import android.content.Context;
 import android.net.Uri;
@@ -7,8 +8,6 @@ import android.os.Environment;
 import android.webkit.MimeTypeMap;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
-
-
 
 public class DownLoadUtils {
     public void downapk(String url,String targetFile,Context context){

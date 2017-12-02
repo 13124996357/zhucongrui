@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import cn.edu.gdmec.android.mobileguard.m1Home.HomeActivity;
 import cn.edu.gdmec.android.mobileguard.m1Home.utils.MyUtils;
+import cn.edu.gdmec.android.mobileguard.m1Home.utils.VersionUpdateUtils;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -21,13 +22,13 @@ public class SplashActivity extends AppCompatActivity {
         mVersion = MyUtils.getVersion(getApplicationContext());
         mVersionTV = (TextView) findViewById(R.id.tv_splash_version);
         mVersionTV.setText("版本号:"+mVersion);
-//        VersionUpdateUtils.DownloadCallback downloadCallback = new VersionUpdateUtils.DownloadCallback() {
-//            @Override
-//            public void afterDownload(String filename) {
-//                MyUtils.installApk(SpalshActivity.this,filename);
-//            }
-//        };
-//        final VersionUpdateUtils versionUpdateUtils = new VersionUpdateUtils(mVersion,SpalshActivity.this,downloadCallback,HomeActivity.class);
+        VersionUpdateUtils.DownloadCallback downloadCallback = new VersionUpdateUtils.DownloadCallback() {
+            @Override
+            public void afterDownload(String filename) {
+                MyUtils.installApk(SplashActivity.this,filename);
+            }
+        };
+        final VersionUpdateUtils versionUpdateUtils = new VersionUpdateUtils(mVersion,SplashActivity.this,downloadCallback,HomeActivity.class);
 //        new Thread(){
 //
 //            @Override

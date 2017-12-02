@@ -25,6 +25,7 @@ import cn.edu.gdmec.android.mobileguard.m3communicationguard.SecurityPhoneActivi
 import cn.edu.gdmec.android.mobileguard.m4appmanager.AppManagerActivity;
 import cn.edu.gdmec.android.mobileguard.m5virusscan.VirusScanActivity;
 import cn.edu.gdmec.android.mobileguard.m6cleancache.CacheClearListActivity;
+import cn.edu.gdmec.android.mobileguard.m8trafficmonitor.TrafficMonitoringActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -60,7 +61,8 @@ public class HomeActivity extends AppCompatActivity {
                         }
                         break;
                     case 1:
-                       startActivity(SecurityPhoneActivity.class);
+                        Intent intent = new Intent(HomeActivity.this, SecurityPhoneActivity.class);
+                        startActivity(intent);
                         break;
                     case 2:
                         startActivity(AppManagerActivity.class);
@@ -71,6 +73,8 @@ public class HomeActivity extends AppCompatActivity {
                     case 4:
                         startActivity(CacheClearListActivity.class);
                         break;
+                    case 6:
+                        startActivity(TrafficMonitoringActivity.class);
                 }
             }
         });
@@ -78,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
         policyManager=(DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
         //本行代码需要 "手机防盗模块"完成后才能启用
         // 2.申请权限, MyDeviceAdminReciever继承自DeviceAdminReceiver
-        componentName=new ComponentName(this,MyDeviceAdminReciever.class);
+        componentName=new ComponentName(this, MyDeviceAdminReciever.class);
         // 3.判断,如果没有权限则申请权限
         boolean active=policyManager.isAdminActive(componentName);
         if(!active) {

@@ -4,8 +4,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-
-import org.apache.http.util.TextUtils;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,4 +78,3 @@ public class ContactInfoParser {
         return infos;
     }
 }
-

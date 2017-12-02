@@ -2,6 +2,7 @@ package cn.edu.gdmec.android.mobileguard.m1Home.utils;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -13,7 +14,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AlertDialog;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
@@ -35,11 +35,6 @@ import cn.edu.gdmec.android.mobileguard.R;
 import cn.edu.gdmec.android.mobileguard.m1Home.entity.VersionEntity;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
-
-/**
- * 更新提醒工具类
- * Created by apple on 2017/9/11.
- */
 
 public class VersionUpdateUtils {
     //声明常量
