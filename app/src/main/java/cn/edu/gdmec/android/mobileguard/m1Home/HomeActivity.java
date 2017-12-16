@@ -26,6 +26,7 @@ import cn.edu.gdmec.android.mobileguard.m4appmanager.AppManagerActivity;
 import cn.edu.gdmec.android.mobileguard.m5virusscan.VirusScanActivity;
 import cn.edu.gdmec.android.mobileguard.m6cleancache.CacheClearListActivity;
 import cn.edu.gdmec.android.mobileguard.m8trafficmonitor.TrafficMonitoringActivity;
+import cn.edu.gdmec.android.mobileguard.m9advancedtools.AdvancedToolsActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -50,7 +51,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 System.out.print(i);
-                switch(i){
+                switch(i) {
                     case 0: // 点击手机防盗
                         if (isSetUpPassword()) {
                             // 弹出输入密码对话框
@@ -75,6 +76,12 @@ public class HomeActivity extends AppCompatActivity {
                         break;
                     case 6:
                         startActivity(TrafficMonitoringActivity.class);
+                        break;
+                    case 7:
+                        startActivity(AdvancedToolsActivity.class);
+                        break;
+
+
                 }
             }
         });
