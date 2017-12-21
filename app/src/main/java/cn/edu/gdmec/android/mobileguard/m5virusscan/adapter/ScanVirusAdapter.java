@@ -11,38 +11,33 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.edu.gdmec.android.mobileguard.R;
-import cn.edu.gdmec.android.mobileguard.m5virusscan.utils.ScanAppInfo;
+import cn.edu.gdmec.android.mobileguard.m5virusscan.entity.ScanAppInfo;
 
 public class ScanVirusAdapter  extends BaseAdapter {
     private List<ScanAppInfo> mScanAppInfos;
     private Context context;
-    public ScanVirusAdapter(List<ScanAppInfo> scanAppInfo, Context context) {
+    public ScanVirusAdapter(List<ScanAppInfo> scanAppInfo,Context context) {
         super();
         mScanAppInfos = scanAppInfo;
         this.context = context;
     }
     static class ViewHolder{
         ImageView mAppIconImgv;
-        TextView mAppNameTV;
+        TextView  mAppNameTV;
         ImageView mScanIconImgv;
     }
-
-
     @Override
     public int getCount() {
-        return  mScanAppInfos.size();
+        return mScanAppInfos.size();
     }
-
     @Override
-    public Object getItem(int position) {
-        return mScanAppInfos.get(position);
+    public Object getItem(int i) {
+        return mScanAppInfos.get(i);
     }
-
     @Override
-    public long getItemId(int position) {
-        return position;
+    public long getItemId(int i) {
+        return i;
     }
-
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
