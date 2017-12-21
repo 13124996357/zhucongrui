@@ -9,13 +9,12 @@ import cn.edu.gdmec.android.mobileguard.m9advancedtools.service.AppLockService;
 
 
 public class BootCompleteReciever extends BroadcastReceiver{
-   private static final String TAG=BootCompleteReciever.class.getSimpleName();
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO: This method is called when the BroadcastReceiver is receiving
-        // an Intent broadcast.
+
         ((App)(context.getApplicationContext())).correctSIM();//初始化
-        // 启动程序锁服务
+
         context.startService(new Intent(context, AppLockService.class));
     }
 }

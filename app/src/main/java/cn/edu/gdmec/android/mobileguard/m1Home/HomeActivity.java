@@ -41,17 +41,22 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //设置布局
         setContentView(R.layout.activity_home);
+        //隐藏标题栏
         getSupportActionBar().hide();
+        //获取共享参考对象
         msharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
+        //获取gridview实例
         gv_home = (GridView) findViewById(R.id.gv_home);
+        //为gridview设置是适配器
         gv_home.setAdapter(new HomeAdapter(HomeActivity.this));
+        //为gridview设置item的点击监听
         gv_home.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 System.out.print(i);
-                switch(i) {
+                switch( i  ){
                     case 0: // 点击手机防盗
                         if (isSetUpPassword()) {
                             // 弹出输入密码对话框
@@ -79,9 +84,6 @@ public class HomeActivity extends AppCompatActivity {
                         break;
                     case 7:
                         startActivity(AdvancedToolsActivity.class);
-                        break;
-
-
                 }
             }
         });
@@ -89,7 +91,7 @@ public class HomeActivity extends AppCompatActivity {
         policyManager=(DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
         //本行代码需要 "手机防盗模块"完成后才能启用
         // 2.申请权限, MyDeviceAdminReciever继承自DeviceAdminReceiver
-        componentName=new ComponentName(this, MyDeviceAdminReciever.class);
+        componentName=new ComponentName(this,MyDeviceAdminReciever.class);
         // 3.判断,如果没有权限则申请权限
         boolean active=policyManager.isAdminActive(componentName);
         if(!active) {

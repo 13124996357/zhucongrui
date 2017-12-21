@@ -1,8 +1,6 @@
-package cn.edu.gdmec.android.mobileguard.m5virusscan.utils;
+package cn.edu.gdmec.android.mobileguard.m5virusscan.entity;
 
 import android.graphics.drawable.Drawable;
-
-
 
 public class ScanAppInfo {
     public String appName;
