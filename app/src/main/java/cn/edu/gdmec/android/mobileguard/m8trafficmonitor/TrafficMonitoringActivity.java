@@ -150,7 +150,7 @@ public class TrafficMonitoringActivity  extends AppCompatActivity implements Vie
                 switch (i) {
                     case 0:
                         // 没有设置运营商
-                        Toast.makeText(this, "您还没有设置运营商信息", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "您还没有设置运营商信息", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
                         // 中国移动
