@@ -11,20 +11,24 @@ public class TrafficOpenHelper extends SQLiteOpenHelper {
     /** 流量 */
     private final static String GPRS = "gprs";
     private final static String TIME = "date";
+
     public TrafficOpenHelper(Context context) {
         super(context, DB_NAME, null, 1);
     }
+
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table " + TABLE_NAME
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("create table " + TABLE_NAME
                 + "(id integer primary key autoincrement," + GPRS
                 + " varchar(255)," + TIME + " datetime)");
     }
 
+    //     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
 
 
 }
