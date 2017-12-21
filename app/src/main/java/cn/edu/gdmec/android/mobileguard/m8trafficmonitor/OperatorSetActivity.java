@@ -1,11 +1,12 @@
 package cn.edu.gdmec.android.mobileguard.m8trafficmonitor;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -14,7 +15,7 @@ import android.widget.TextView;
 import cn.edu.gdmec.android.mobileguard.R;
 
 
-public class OperatorSetActivity extends AppCompatActivity implements View.OnClickListener{
+public class OperatorSetActivity extends Activity implements View.OnClickListener{
     private Spinner mSelectSP;
     private String[] operators = { "中国移动", "中国联通", "中国电信" };
     private ArrayAdapter mSelectadapter;
@@ -22,12 +23,16 @@ public class OperatorSetActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.activity_operator_set);
         msp = getSharedPreferences("config", MODE_PRIVATE);
         initView();
     }
+
     private void initView() {
-        findViewById(R.id.rl_titlebar).setBackgroundColor(
+        findViewById( R.id.rl_titlebar).setBackgroundColor(
                 getResources().getColor(R.color.light_green));
         ImageView mLeftImgv = (ImageView) findViewById(R.id.imgv_leftbtn);
         ((TextView) findViewById(R.id.tv_title)).setText("运营商信息设置");
