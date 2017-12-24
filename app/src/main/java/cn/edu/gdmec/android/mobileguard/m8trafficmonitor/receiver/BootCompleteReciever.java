@@ -10,18 +10,16 @@ import cn.edu.gdmec.android.mobileguard.m8trafficmonitor.service.TrafficMonitori
 import cn.edu.gdmec.android.mobileguard.m8trafficmonitor.utils.SystemInfoUtils;
 
 public class BootCompleteReciever extends BroadcastReceiver {
-
     @Override
     public void onReceive(Context context, Intent intent) {
         //开机广播
-        //判断流量监控服务是否开启，如果没开启则开启
-        if(!SystemInfoUtils.isServiceRunning(context,"cn.edu.gdmec.android.mobileguard.m8trafficmonitor.service.TrafficMonitoringService")){
+        //判断流量监控服务是否开启。如果没有开启则开启
+        if (!SystemInfoUtils.isServiceRunning(context,
+                "cn.edu.android.mobileguard.m8trafficmonitor.service.TrafficMonitoringService")){
             //开启服务
-//            m8
-            //新添加
-            Log.d ( "traffic service","turn on" );
-
+            Log.d("traffic service","turn on");
             context.startService(new Intent(context, TrafficMonitoringService.class));
         }
+
     }
 }

@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +29,8 @@ public class VirusScanActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature( Window.FEATURE_NO_TITLE);
+        getSupportActionBar ().hide (); //去掉标题栏
         setContentView(R.layout.activity_virus_scan);
         mSP = getSharedPreferences("config", MODE_PRIVATE);
         copyDB("antivirus.db","");
@@ -44,20 +47,18 @@ public class VirusScanActivity extends AppCompatActivity implements View.OnClick
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == 0){
-                AntiVirusDao dao = new AntiVirusDao(VirusScanActivity.this);
-                String dbVersion = dao.getVirusDbVersion();
-                mDbVersionTV = (TextView) findViewById(R.id.tv_dbversion);
-                mDbVersionTV.setText("病毒数据库版本:"+dbVersion);
-                UpdateDb(dbVersion);
-            }
+            AntiVirusDao dao = new AntiVirusDao(VirusScanActivity.this);
+            String dbVersion = dao.getVirusDbVersion();
+            mDbVersionTV = (TextView) findViewById(R.id.tv_dbversion);
+            mDbVersionTV.setText("病毒数据库版本:"+dbVersion);
+            UpdateDb(dbVersion);
             super.handleMessage(msg);
         }
     };
     VersionUpdateUtils.DownloadCallback downloadCallback = new VersionUpdateUtils.DownloadCallback() {
         @Override
         public void afterDownload(String filename) {
-            copyDB("antivirus.db", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
+            copyDB("antivirus.db", Environment.getExternalStoragePublicDirectory("/download/").getPath());
         }
     };
 
@@ -72,8 +73,10 @@ public class VirusScanActivity extends AppCompatActivity implements View.OnClick
         }.start();
 
     }
-
-    private void copyDB(final String dbname,final String fromPath) {
+    /**
+     * 拷贝病毒数据库
+     */
+    private void copyDB(final String dbname, final String fromPath) {
         //大文件的拷贝复制一定要用线程，否则很容易出现ANR
         new Thread(){
             public void run() {
@@ -120,7 +123,7 @@ public class VirusScanActivity extends AppCompatActivity implements View.OnClick
         mLeftImgv.setImageResource(R.drawable.back);
         mLastTimeTV = (TextView) findViewById(R.id.tv_lastscantime);
         findViewById(R.id.rl_allscanvirus).setOnClickListener(this);
-        findViewById(R.id.rl_cloudscanvirus).setOnClickListener(this);
+        findViewById ( R.id.rl_cloudscanvirus ).setOnClickListener ( this );
     }
     @Override
     public void onClick(View view) {
@@ -132,10 +135,10 @@ public class VirusScanActivity extends AppCompatActivity implements View.OnClick
                 startActivity(new Intent(this,VirusScanSpeedActivity.class));
                 break;
             case R.id.rl_cloudscanvirus:
-                Intent intent = new Intent(this,VirusScanSpeedActivity.class);
-                intent.putExtra("cloud",true);
-                startActivity(intent);
+                Intent intent = new Intent ( this,VirusScanSpeedActivity.class );
+                intent.putExtra ( "cloud", true );
 
+                startActivity ( intent );
         }
     }
 }

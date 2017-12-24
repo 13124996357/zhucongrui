@@ -13,11 +13,7 @@ import java.io.File;
 
 
 public class MyUtils {
-    /**
-     * 获取版本号
-     * @param context
-     * @return 返回版本号
-     */
+    //获取版本号
     public static String getVersion(Context context){
         PackageManager packageManager = context.getPackageManager();
         try {
@@ -28,17 +24,12 @@ public class MyUtils {
             return "";
         }
     }
-    /**
-     * 安装新版本
-     * @param activity
-     */
-    public static void installApk(Activity activity,String apkFile){
-        Intent intent = new Intent(Intent.ACTION_VIEW);
+    //安装新版本
+    public static void installApk(Activity activity, String apkFile){
+        Intent intent = new Intent (Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.setDataAndType(Uri.fromFile(
-                new File(Environment.getExternalStoragePublicDirectory("/download/").getPath()+"/"+apkFile)),
-                "application/vnd.android.package-archive");
+        intent.setDataAndType( Uri.fromFile(
+                new File( Environment.getExternalStoragePublicDirectory("/download/").getPath()+"/"+apkFile)),"application/vnd.android.package-archive");
         activity.startActivityForResult(intent,0);
     }
-
 }

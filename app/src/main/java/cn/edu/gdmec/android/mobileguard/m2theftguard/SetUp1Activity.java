@@ -7,24 +7,21 @@ import android.widget.Toast;
 import cn.edu.gdmec.android.mobileguard.R;
 
 
-public class SetUp1Activity extends BaseSetUpActivity{
+public class SetUp1Activity extends BaseSetUpActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_up1);
-        initView();
+        ((RadioButton) findViewById(R.id.rb_first)).setChecked(true);
     }
 
-    private void initView() {
-        ((RadioButton)findViewById(R.id.rb_first)).setChecked(true);
-    }
     @Override
-    public void showNext(){
+    public void showNext() {
         startActivityAndFinishSelf(SetUp2Activity.class);
     }
 
     @Override
-    public void showPre(){
-        Toast.makeText(this,"当前页面已经是第一页", Toast.LENGTH_SHORT).show();
+    public void showPre() {
+        Toast.makeText(this, "当前页面已经是第一页", Toast.LENGTH_LONG).show();
     }
 }

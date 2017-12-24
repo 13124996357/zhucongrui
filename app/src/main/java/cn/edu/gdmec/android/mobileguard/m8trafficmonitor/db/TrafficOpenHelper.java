@@ -7,10 +7,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class TrafficOpenHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "traffic.db";
+
     private static final String TABLE_NAME = "traffic";
-    /** 流量 */
-    private final static String GPRS = "gprs";
-    private final static String TIME = "date";
+    /*流量*/
+    private static final String GPRS = "gprs";
+    private static final String TIME = "date";
 
     public TrafficOpenHelper(Context context) {
         super(context, DB_NAME, null, 1);
@@ -23,12 +24,9 @@ public class TrafficOpenHelper extends SQLiteOpenHelper {
                 + " varchar(255)," + TIME + " datetime)");
     }
 
-    //     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-
-
 
 }

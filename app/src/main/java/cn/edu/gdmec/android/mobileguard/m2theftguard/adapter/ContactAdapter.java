@@ -15,7 +15,7 @@ import cn.edu.gdmec.android.mobileguard.m2theftguard.entity.ContactInfo;
 public class ContactAdapter extends BaseAdapter {
     private List<ContactInfo> contactInfos;
     private Context context;
-    public ContactAdapter(List<ContactInfo> contactInfos, Context context) {
+    public ContactAdapter(List<ContactInfo> contactInfos,Context context){
         super();
         this.contactInfos = contactInfos;
         this.context = context;
@@ -24,24 +24,27 @@ public class ContactAdapter extends BaseAdapter {
     public int getCount() {
         return contactInfos.size();
     }
+
     @Override
     public Object getItem(int i) {
         return contactInfos.get(i);
     }
+
     @Override
     public long getItemId(int i) {
         return i;
     }
+
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder = null;
-        if(view == null){
-            view = View.inflate(context, R.layout.item_list_contact_select, null);
+        if (view == null){
+            view = View.inflate(context, R.layout.item_list_contact_select,null);
             holder = new ViewHolder();
             holder.mNameTV = (TextView) view.findViewById(R.id.tv_name);
             holder.mPhoneTV = (TextView) view.findViewById(R.id.tv_phone);
             view.setTag(holder);
-        }else{
+        }else {
             holder = (ViewHolder) view.getTag();
         }
         holder.mNameTV.setText(contactInfos.get(i).name);

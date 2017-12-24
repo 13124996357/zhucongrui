@@ -20,10 +20,13 @@ public class TrafficMonitoringService extends Service {
     private long usedFlow;
     boolean flag = true;
 
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -31,10 +34,12 @@ public class TrafficMonitoringService extends Service {
         mOldTxBytes = TrafficStats.getMobileTxBytes();
         dao = new TrafficDao(this);
         mSp = getSharedPreferences("config", MODE_PRIVATE);
+        usedFlow = mSp.getLong("usedflow",0);
         mThread.start();
     }
 
     private Thread mThread = new Thread() {
+        @Override
         public void run() {
             while (flag) {
                 try {
@@ -43,54 +48,54 @@ public class TrafficMonitoringService extends Service {
                     e.printStackTrace();
                 }
                 updateTodayGPRS();
+
             }
         }
+
         private void updateTodayGPRS() {
-            // 获取已经使用了的流量
+            //获取已经使用的流量
             usedFlow = mSp.getLong("usedflow", 0);
             Date date = new Date();
-
-            Calendar calendar = Calendar.getInstance(); // 得到日历
-
-            calendar.setTime(date);// 把当前时间赋给日历
-
+            Calendar calendar = Calendar.getInstance();//得到日历
+            calendar.setTime(date);//把当前时间赋给日历
             if (calendar.DAY_OF_MONTH == 1 & calendar.HOUR_OF_DAY == 0
                     & calendar.MINUTE < 1 & calendar.SECOND < 30) {
                 usedFlow = 0;
             }
-            SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM--dd");
             String dataString = sdf.format(date);
-            long moblieGPRS = dao.getMoblieGPRS(dataString);
+            long mobilesGPRS = dao.getMebileGPRS(dataString);
             long mobileRxBytes = TrafficStats.getMobileRxBytes();
             long mobileTxBytes = TrafficStats.getMobileTxBytes();
-
-            // 新产生的流量
-            long newGprs = (mobileRxBytes + mobileTxBytes) - mOldRxBytes
-                    - mOldTxBytes;
+            //新产生的流量
+            long newGprs = (mobileRxBytes + mobileTxBytes) - mOldRxBytes - mOldTxBytes;
             mOldRxBytes = mobileRxBytes;
             mOldTxBytes = mobileTxBytes;
             if (newGprs < 0) {
-                // 网络切换过
+                //网络切换过
                 newGprs = mobileRxBytes + mobileTxBytes;
             }
-            if (moblieGPRS == -1) {
+            if (mobilesGPRS == -1) {
                 dao.insertTodayGPRS(newGprs);
             } else {
-                if (moblieGPRS < 0) {
-                    moblieGPRS = 0;
+                if (mobilesGPRS < 0) {
+                    mobilesGPRS = 0;
                 }
-                dao.UpdateTodayGPRS(moblieGPRS + newGprs);
+                dao.UpdateTodayGPRS(mobilesGPRS + newGprs);
             }
             usedFlow = usedFlow + newGprs;
-            SharedPreferences.Editor edit = mSp.edit();
-            edit.putLong("usedflow", usedFlow);
-            edit.commit();
-        };
+            SharedPreferences.Editor editor = mSp.edit();
+            editor.putLong("usedflow", usedFlow);
+            editor.commit();
+
+
+        }
     };
 
     @Override
     public void onDestroy() {
-        if (mThread != null & !mThread.interrupted()) {
+        if (mThread != null & !mThread.isInterrupted()) {
+            //if(mThread != null & mThread.isInterrupted()){
             flag = false;
             mThread.interrupt();
             mThread = null;
